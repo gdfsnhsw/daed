@@ -5,6 +5,7 @@ import { GlobalInput, Policy } from '~/schemas/gql/graphql'
 import { DialMode, LogLevel, TLSImplementation, TcpCheckHttpMethod, UTLSImitate } from './misc'
 import {
   httpSchema,
+  hysteria2Schema,
   juicitySchema,
   socks5Schema,
   ssSchema,
@@ -24,7 +25,7 @@ export const DEFAULT_ALLOW_INSECURE = false
 export const DEFAULT_CHECK_INTERVAL_SECONDS = 30
 export const DEFAULT_CHECK_TOLERANCE_MS = 0
 export const DEFAULT_SNIFFING_TIMEOUT_MS = 100
-export const DEFAULT_UDP_CHECK_DNS = ['dns.google.com:53', '8.8.8.8', '2001:4860:4860::8888']
+export const DEFAULT_UDP_CHECK_DNS = ['dns.google:53', '8.8.8.8', '2001:4860:4860::8888']
 export const DEFAULT_TCP_CHECK_URL = ['http://cp.cloudflare.com', '1.1.1.1', '2606:4700:4700::1111']
 export const DEFAULT_DIAL_MODE = DialMode.domain
 export const DEFAULT_TCP_CHECK_HTTP_METHOD = TcpCheckHttpMethod.HEAD
@@ -32,6 +33,11 @@ export const DEFAULT_DISABLE_WAITING_NETWORK = false
 export const DEFAULT_AUTO_CONFIG_KERNEL_PARAMETER = true
 export const DEFAULT_TLS_IMPLEMENTATION = TLSImplementation.tls
 export const DEFAULT_UTLS_IMITATE = UTLSImitate.chrome_auto
+export const DEFAULT_MPTCP = false
+export const DEFAULT_ENABLE_LOCAL_TCP_FAST_REDIRECT = false
+export const DEFAULT_PPROF_PORT = 0
+export const DEFAULT_BANDWIDTH_MAX_TX = '200 mbps'
+export const DEFAULT_BANDWIDTH_MAX_RX = '1 gbps'
 
 export const DEFAULT_CONFIG_NAME = 'global'
 export const DEFAULT_DNS_NAME = 'default'
@@ -42,6 +48,7 @@ export const DEFAULT_CONFIG_WITH_LAN_INTERFACEs = (interfaces: string[] = []): G
   logLevel: DEFAULT_LOG_LEVEL,
   tproxyPort: DEFAULT_TPROXY_PORT,
   tproxyPortProtect: DEFAULT_TPROXY_PORT_PROTECT,
+  pprofPort: DEFAULT_PPROF_PORT,
   soMarkFromDae: DEFAULT_SO_MARK_FROM_DAE,
   allowInsecure: DEFAULT_ALLOW_INSECURE,
   checkInterval: `${DEFAULT_CHECK_INTERVAL_SECONDS}s`,
@@ -57,6 +64,10 @@ export const DEFAULT_CONFIG_WITH_LAN_INTERFACEs = (interfaces: string[] = []): G
   tlsImplementation: DEFAULT_TLS_IMPLEMENTATION,
   utlsImitate: DEFAULT_UTLS_IMITATE,
   disableWaitingNetwork: DEFAULT_DISABLE_WAITING_NETWORK,
+  enableLocalTcpFastRedirect: DEFAULT_ENABLE_LOCAL_TCP_FAST_REDIRECT,
+  mptcp: DEFAULT_MPTCP,
+  bandwidthMaxTx: DEFAULT_BANDWIDTH_MAX_TX,
+  bandwidthMaxRx: DEFAULT_BANDWIDTH_MAX_RX,
 })
 
 export const DEFAULT_GROUP_POLICY = Policy.MinMovingAvg
@@ -167,6 +178,18 @@ export const DEFAULT_JUICITY_FORM_VALUES: z.infer<typeof juicitySchema> = {
   password: '',
   pinned_certchain_sha256: '',
   sni: '',
+}
+
+export const DEFAULT_HYSTERIA2_FORM_VALUES: z.infer<typeof hysteria2Schema> = {
+  name: '',
+  port: 443,
+  server: '',
+  auth: '',
+  obfs: '',
+  obfsPassword: '',
+  sni: '',
+  allowInsecure: false,
+  pinSHA256: '',
 }
 
 export const DEFAULT_HTTP_FORM_VALUES: z.infer<typeof httpSchema> = {
